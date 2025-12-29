@@ -1,0 +1,28 @@
+# MSVC / C++
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.log
+*.tlog
+
+# Build output
+bin/
+obj/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.filters
+*.ipch
+
+# Config
+AutoLangSwitcher_Config.ini
+
+# Metadata
+.agent/
+.gemini/
