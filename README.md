@@ -35,6 +35,10 @@ Access the controls via the **Plugins > AutoLangSwitcher** menu:
 
 ---
 
+*Created by Mister Obat with the assistance of an Artificial Intelligence.*  
+
+---
+
 ## Français
 
 **AutoLangSwitcher** est un plugin pour Notepad++ conçu pour imposer automatiquement un langage ou un UDL spécifique lors de l'ouverture de **fichiers texte** (comme `.txt`) ou de **nouveaux documents**. Il garantit un environnement cohérent pour vos notes tout en **préservant** la coloration syntaxique des fichiers ayant une extension connue (ex: `.cpp`, `.xml`, `.json` restent inchangés).
@@ -70,5 +74,4 @@ Menu **Compléments > AutoLangSwitcher** :
 
 ---
 
-*Created by Mister Obat with the assistance of an Artificial Intelligence.*  
 *Créé par Mister Obat avec l'assistance d'une Intelligence Artificielle.*

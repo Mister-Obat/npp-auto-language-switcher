@@ -150,6 +150,11 @@ void checkAndForceLanguage()
     // Prevent infinite loop: Only set if different
     int currentLang = 0;
     ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTLANGUAGETYPE, 0, (LPARAM)&currentLang);
+
+    // FIX: If the file is already detected as a specific language (C++, Python, etc.), 
+    // i.e., it is NOT "Normal Text" (0), then we should preserve that native detection.
+    // We only want to auto-switch files that would otherwise stay as Plain Text.
+    if (currentLang != 0) return;
     
     // DEBUG: Popup to see if we are trying to switch
     // TCHAR debugMsg[256];
@@ -268,15 +273,28 @@ void pluginBeNotified(SCNotification *notifyCode)
             // Record the initial buffer as processed to allow checkAndForce
             processedBuffers.clear(); 
             checkAndForceLanguage();
-            if (nppData._nppHandle) {
-                // Get current buffer ID to mark it
-                // We don't have a direct NPPM_GETCURRENTBUFFERID, but BufferID is often passed in notifications.
-                // For READY, we just force it once.
-            }
             break;
 
         case NPPN_FILEOPENED:
+            // When a file is opened, we MUST reset its state in our history
+            // because a closed file might be re-opened, or N++ might be reloading it.
+            // Crucially, we do NOT insert it into processedBuffers yet.
+            // We force check now, and let BUFFERACTIVATED handle the persistence check later if needed.
+            if (bufID) {
+                processedBuffers.erase(bufID);
+                
+                // Double check: Only force if this is actually the active buffer now
+                LRESULT activeBufID = ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTBUFFERID, 0, 0);
+                if ((void*)activeBufID == bufID) {
+                    checkAndForceLanguage();
+                    // We can mark it processed here to avoid double-hit on the immediate BUFFERACTIVATED that follows
+                    processedBuffers.insert(bufID);
+                }
+            }
+            break;
+
         case NPPN_BUFFERACTIVATED:
+            // This happens when switching tabs OR just after FileOpened
             if (isNppReady && bufID) 
             {
                 if (processedBuffers.find(bufID) == processedBuffers.end()) 
