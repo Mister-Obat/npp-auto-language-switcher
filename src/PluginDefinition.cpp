@@ -206,8 +206,8 @@ void SetCurrentAsDefault()
     LoadSettings();
     
     TCHAR msg[512];
-    wsprintf(msg, TEXT("Langage par défaut défini sur :\n\n%s (ID: %d)\n\nSauvegardé dans : %s"), langName, langType, iniFilePath);
-    ::MessageBox(nppData._nppHandle, msg, TEXT("Configuration Sauvegardée !"), MB_OK);
+    wsprintf(msg, TEXT("Default language set to:\n\n%s (ID: %d)\n\nSaved to: %s"), langName, langType, iniFilePath);
+    ::MessageBox(nppData._nppHandle, msg, TEXT("Configuration Saved!"), MB_OK);
 }
 
 void ResetConfig()
@@ -218,7 +218,7 @@ void ResetConfig()
     
     LoadSettings();
     
-    ::MessageBox(nppData._nppHandle, TEXT("Le plugin est maintenant DÉSACTIVÉ.\n(Aucun langage ne sera forcé automatiquement)"), TEXT("AutoLangSwitcher"), MB_OK);
+    ::MessageBox(nppData._nppHandle, TEXT("Plugin is now DISABLED.\n(No language will be forced automatically)"), TEXT("AutoLangSwitcher"), MB_OK);
 }
 
 // Callback to handle the link click in TaskDialog
